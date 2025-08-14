@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문자별 유니코드/ASCII 분석기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .char-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .char-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .char-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .char-info {
+            display: grid;
+            gap: 8px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .info-value {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .char-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px 2px;
+        }
+
+        .ascii {
+            background: #e8f5e8;
+            color: #2d5a2d;
+        }
+
+        .unicode {
+            background: #e8f0ff;
+            color: #1e3a8a;
+        }
+
+        .korean {
+            background: #fff0e8;
+            color: #8a2e1e;
+        }
+
+        .special {
+            background: #f0e8ff;
+            color: #5a1e8a;
+        }
+
+        .whitespace {
+            background: #f0f0f0;
+            color: #555;
+        }
+
+        .summary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary h3 {
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>문자별 유니코드/ASCII 분석기</h1>
+        
+        <div class="input-section">
+            <label for="textInput">분석할 텍스트를 입력하세요:</label>
+            <textarea id="textInput" placeholder="여기에 텍스트를 입력하세요...&#10;예: Hello 안녕하세요! 123 @#$"></textarea>
+            <button class="analyze-btn" onclick="analyzeText()">문자 분석하기</button>
+        </div>
+
+        <div class="results hidden" id="results">
+            <div class="summary" id="summary"></div>
+            <div class="char-grid" id="charGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeText() {
+            const input = document.getElementById('textInput').value;
+            if (!input.trim()) {
+                alert('텍스트를 입력해주세요!');
+                return;
+            }
+
+            const results = document.getElementById('results');
+            const summary = document.getElementById('summary');
+            const charGrid = document.getElementById('charGrid');
+            
+            // 초기화
+            charGrid.innerHTML = '';
+            
+            // 통계 변수
+            let stats = {
+                total: input.length,
+                ascii: 0,
+                unicode: 0,
+                korean: 0,
+                special: 0,
+                whitespace: 0,
+                digits: 0,
+                alphabets: 0
+            };
+
+            // 각 문자 분석
+            for (let i = 0; i < input.length; i++) {
+                const char = input.charAt(i);
+                const charCode = input.charCodeAt(i);
+                const codePoint = input.codePointAt(i);
+                
+                // 문자 타입 분류
+                const types = getCharTypes(char, charCode);
+                types.forEach(type => stats[type]++);
+
+                // 카드 생성
+                const card = createCharCard(char, charCode, codePoint, i, types);
+                charGrid.appendChild(card);
+            }
+
+            // 요약 정보 생성
+            summary.innerHTML = createSummary(stats);
+            
+            // 결과 표시
+            results.classList.remove('hidden');
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getCharTypes(char, charCode) {
+            const types = [];
+            
+            if (charCode <= 127) {
+                types.push('ascii');
+            } else {
+                types.push('unicode');
+            }
+            
+            if (/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(char)) {
+                types.push('korean');
+            }
+            
+            if (/\s/.test(char)) {
+                types.push('whitespace');
+            } else if (/[0-9]/.test(char)) {
+                types.push('digits');
+            } else if (/[a-zA-Z]/.test(char)) {
+                types.push('alphabets');
+            } else if (!/[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s]/.test(char)) {
+                types.push('special');
+            }
+            
+            return types;
+        }
+
+        function createCharCard(char, charCode, codePoint, index, types) {
+            const card = document.createElement('div');
+            card.className = 'char-card';
+            
+            const displayChar = char === ' ' ? '공백' : 
+                               char === '\n' ? '줄바꿈' : 
+                               char === '\t' ? '탭' : char;
+            
+            const typeLabels = types.map(type => {
+                const labels = {
+                    ascii: 'ASCII',
+                    unicode: 'Unicode',
+                    korean: '한글',
+                    special: '특수문자',
+                    whitespace: '공백문자',
+                    digits: '숫자',
+                    alphabets: '영문자'
+                };
+                return `<span class="char-type ${type}">${labels[type]}</span>`;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="char-display">${displayChar}</div>
+                <div class="char-info">
+                    <div class="info-row">
+                        <span class="info-label">위치:</span>
+                        <span class="info-value">${index}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">문자:</span>
+                        <span class="info-value">'${char}'</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">ASCII/UTF-16:</span>
+                        <span class="info-value">${charCode}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">16진수:</span>
+                        <span class="info-value">0x${charCode.toString(16).toUpperCase()}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Unicode:</span>
+                        <span class="info-value">U+${charCode.toString(16).toUpperCase().padStart(4, '0')}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">타입:</span>
+                        <span class="info-value">${typeLabels}</span>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function createSummary(stats) {
+            return `
+                <h3>📊 분석 결과 요약</h3>
+                <div class="stats">
+                    <div class="stat-item">
+                        <strong>전체 문자</strong><br>
+                        ${stats.total}개
+                    </div>
+                    <div class="stat-item">
+                        <strong>ASCII 문자</strong><br>
+                        ${stats.ascii}개
+                    </div>
+                    <div class="stat-item">
+                        <strong>Unicode 문자</strong><br>
+                        ${stats.unicode}개
+                    </div>
+                    <div class="stat-item">
+                        <strong>한글</strong><br>
+                        ${stats.korean}개
+                    </div>
+                    <div class="stat-item">
+                        <strong>특수문자</strong><br>
+                        ${stats.special}개
+                    </div>
+                    <div class="stat-item">
+                        <strong>공백문자</strong><br>
+                        ${stats.whitespace}개
+                    </div>
+                </div>
+            `;
+        }
+
+        // 엔터키로 분석 실행
+        document.getElementById('textInput').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                analyzeText();
+            }
+        });
+    </script>
+</body>
+</html>
