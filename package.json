@@ -1,0 +1,23 @@
+{
+  "name": "char_analyzer",
+  "version": "1.0.0",
+  "description": "A modern web application to analyze characters in text, showing Unicode, ASCII codes, and character types with a beautiful shadcn-inspired UI",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -l 3000",
+    "dev": "npx serve -s . -l 8080",
+    "serve": "npx serve -s .",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "unicode",
+    "ascii",
+    "character-analysis",
+    "text-analysis",
+    "korean",
+    "character-encoding"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module"
+}
