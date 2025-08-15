@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wooncloud.github.io/char_analyzer/sitemap.xml
