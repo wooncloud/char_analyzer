@@ -24,7 +24,7 @@ function toggleTheme() {
 function updateCharCount() {
     const input = document.getElementById('textInput');
     const charCount = document.getElementById('charCount');
-    charCount.textContent = `${input.value.length}자`;
+    charCount.textContent = `${input.value.length} chars`;
 }
 
 // Show loading
@@ -45,7 +45,7 @@ function analyzeText() {
     const input = document.getElementById('textInput').value;
     if (!input.trim()) {
         // Show error toast
-        showToast('⚠️ 텍스트를 입력해주세요!', 'alert-warning');
+        showToast('⚠️ Please enter some text!', 'alert-warning');
         return;
     }
 
@@ -98,7 +98,7 @@ function analyzeText() {
         results.scrollIntoView({ behavior: 'smooth' });
         
         // Show success toast
-        showToast(`✅ ${stats.total}개 문자 분석 완료!`, 'alert-success');
+        showToast(`✅ Analysis complete for ${stats.total} characters!`, 'alert-success');
     }, 300);
 }
 
@@ -143,10 +143,10 @@ function createCharCard(char, charCode, codePoint, index, types) {
     card.className = 'card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 border border-base-300';
     
     // Display character with special handling
-    const displayChar = char === ' ' ? '공백' : 
-                       char === '\n' ? '줄바꿈' : 
-                       char === '\t' ? '탭' : 
-                       char === '\r' ? '캐리지 리턴' : char;
+    const displayChar = char === ' ' ? 'Space' : 
+                       char === '\n' ? 'Newline' : 
+                       char === '\t' ? 'Tab' : 
+                       char === '\r' ? 'Carriage Return' : char;
     
     // Create type badges
     const typeBadges = types.map(type => {
@@ -167,12 +167,12 @@ function createCharCard(char, charCode, codePoint, index, types) {
             
             <div class="space-y-2">
                 <div class="flex justify-between items-center p-2 bg-base-200 rounded">
-                    <span class="font-medium text-sm">위치</span>
+                    <span class="font-medium text-sm">Position</span>
                     <span class="font-mono text-sm">${index}</span>
                 </div>
                 
                 <div class="flex justify-between items-center p-2 bg-base-200 rounded">
-                    <span class="font-medium text-sm">문자</span>
+                    <span class="font-medium text-sm">Character</span>
                     <span class="font-mono text-sm">'${char}'</span>
                 </div>
                 
@@ -182,7 +182,7 @@ function createCharCard(char, charCode, codePoint, index, types) {
                 </div>
                 
                 <div class="flex justify-between items-center p-2 bg-base-200 rounded">
-                    <span class="font-medium text-sm">16진수</span>
+                    <span class="font-medium text-sm">Hexadecimal</span>
                     <span class="font-mono text-sm">0x${charCode.toString(16).toUpperCase()}</span>
                 </div>
                 
@@ -202,12 +202,12 @@ function getTypeInfo(type) {
     const typeMap = {
         ascii: { label: 'ASCII', class: 'badge-success' },
         unicode: { label: 'Unicode', class: 'badge-info' },
-        korean: { label: '한글', class: 'badge-warning' },
-        special: { label: '특수문자', class: 'badge-error' },
-        whitespace: { label: '공백문자', class: 'badge-neutral' },
-        digits: { label: '숫자', class: 'badge-accent' },
-        alphabets: { label: '영문자', class: 'badge-primary' },
-        emoji: { label: '이모지', class: 'badge-secondary' }
+        korean: { label: 'Korean', class: 'badge-warning' },
+        special: { label: 'Special', class: 'badge-error' },
+        whitespace: { label: 'Whitespace', class: 'badge-neutral' },
+        digits: { label: 'Digits', class: 'badge-accent' },
+        alphabets: { label: 'Alphabets', class: 'badge-primary' },
+        emoji: { label: 'Emoji', class: 'badge-secondary' }
     };
     return typeMap[type] || { label: type, class: 'badge-ghost' };
 }
@@ -215,23 +215,23 @@ function getTypeInfo(type) {
 // Create summary statistics
 function createSummary(stats) {
     const statItems = [
-        { label: '전체 문자', value: stats.total },
+        { label: 'Total Characters', value: stats.total },
         { label: 'ASCII', value: stats.ascii },
         { label: 'Unicode', value: stats.unicode },
-        { label: '한글', value: stats.korean },
-        { label: '영문자', value: stats.alphabets },
-        { label: '숫자', value: stats.digits }
+        { label: 'Korean', value: stats.korean },
+        { label: 'Alphabets', value: stats.alphabets },
+        { label: 'Digits', value: stats.digits }
     ];
 
     // Add non-zero categories
     if (stats.special > 0) {
-        statItems.push({ label: '특수문자', value: stats.special });
+        statItems.push({ label: 'Special Characters', value: stats.special });
     }
     if (stats.whitespace > 0) {
-        statItems.push({ label: '공백문자', value: stats.whitespace });
+        statItems.push({ label: 'Whitespace', value: stats.whitespace });
     }
     if (stats.emoji > 0) {
-        statItems.push({ label: '이모지', value: stats.emoji });
+        statItems.push({ label: 'Emoji', value: stats.emoji });
     }
 
     return statItems.map(item => `

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문자별 유니코드/ASCII 분석기 | Char Analyzer</title>
-    <meta name="description" content="텍스트의 각 문자를 분석하여 유니코드, ASCII 코드, 문자 타입(한글, 영어, 숫자, 특수문자, 이모지) 등 상세 정보를 제공하는 온라인 도구입니다.">
-    <meta name="keywords" content="유니코드, ASCII, 문자 분석, 개발자 도구, 텍스트 분석, unicode, ascii, character analyzer, developer tool">
+    <title>Character Unicode/ASCII Analyzer | Char Analyzer</title>
+    <meta name="description" content="Analyze each character in your text to view detailed information including Unicode values, ASCII codes, and character types (Korean, English, digits, special characters, emojis). A comprehensive online tool for character analysis.">
+    <meta name="keywords" content="unicode, ascii, character analyzer, developer tool, text analysis, character encoding, utf-16, hex converter, korean characters">
     <meta name="author" content="wooncloud">
     <link rel="canonical" href="https://wooncloud.github.io/char_analyzer/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wooncloud.github.io/char_analyzer/">
-    <meta property="og:title" content="문자별 유니코드/ASCII 분석기 | Char Analyzer">
-    <meta property="og:description" content="텍스트를 입력하여 각 문자의 유니코드, ASCII, 종류 등 상세 정보를 확인하세요.">
+    <meta property="og:title" content="Character Unicode/ASCII Analyzer | Char Analyzer">
+    <meta property="og:description" content="Enter text to analyze detailed information about each character including Unicode, ASCII codes, and character types.">
     <meta property="og:image" content="https://wooncloud.github.io/char_analyzer/og-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://wooncloud.github.io/char_analyzer/">
-    <meta property="twitter:title" content="문자별 유니코드/ASCII 분석기 | Char Analyzer">
-    <meta property="twitter:description" content="텍스트를 입력하여 각 문자의 유니코드, ASCII, 종류 등 상세 정보를 확인하세요.">
+    <meta property="twitter:title" content="Character Unicode/ASCII Analyzer | Char Analyzer">
+    <meta property="twitter:description" content="Enter text to analyze detailed information about each character including Unicode, ASCII codes, and character types.">
     <meta property="twitter:image" content="https://wooncloud.github.io/char_analyzer/og-image.png">
     
     <!-- DaisyUI + Tailwind CSS -->
@@ -35,10 +35,10 @@
         <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-primary mb-4">
-                🔍 문자별 유니코드/ASCII 분석기
+                🔍 Character Unicode/ASCII Analyzer
             </h1>
             <p class="text-base-content/70 text-lg">
-                텍스트의 각 문자를 상세히 분석하고 유니코드, ASCII 정보를 확인하세요
+                Analyze each character in your text in detail and view Unicode, ASCII information
             </p>
         </div>
 
@@ -60,31 +60,31 @@
             <div class="card-body">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="badge badge-primary badge-lg">1</span>
-                    <h2 class="text-2xl font-bold">텍스트 입력</h2>
+                    <h2 class="text-2xl font-bold">Text Input</h2>
                 </div>
                 
                 <div class="form-control w-full">
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-2">
-                        <label class="label-text text-base font-medium">분석할 텍스트를 입력하세요</label>
+                        <label class="label-text text-base font-medium">Enter text to analyze</label>
                         <div class="flex items-center gap-2 text-sm text-base-content/60">
                             <kbd class="kbd kbd-sm">Ctrl</kbd>
                             <span>+</span>
                             <kbd class="kbd kbd-sm">Enter</kbd>
-                            <span>빠른 분석</span>
+                            <span>Quick Analysis</span>
                         </div>
                     </div>
                     
                     <textarea 
                         id="textInput" 
                         class="textarea textarea-bordered w-full h-32 font-mono text-base"
-                        placeholder="예: Hello 안녕하세요! 123 @#$&#10;&#10;여기에 분석하고 싶은 텍스트를 입력하세요...&#10;이모지도 분석 가능합니다! 😊🎉🚀"
+                        placeholder="Example: Hello 안녕하세요! 123 @#$&#10;&#10;Enter the text you want to analyze here...&#10;Emojis can also be analyzed! 😊🎉🚀"
                     ></textarea>
                     
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 gap-2">
                         <span class="text-sm text-base-content/60">
-                            💡 한글, 영문, 숫자, 특수문자, 이모지 모두 분석 가능
+                            💡 Korean, English, digits, special characters, emojis - all analyzable
                         </span>
-                        <span class="text-sm font-medium" id="charCount">0자</span>
+                        <span class="text-sm font-medium" id="charCount">0 chars</span>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        문자 분석하기
+                        Analyze Characters
                     </button>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 <div class="card-body">
                     <div class="flex items-center gap-3 mb-6">
                         <span class="badge badge-secondary badge-lg">2</span>
-                        <h2 class="text-2xl font-bold">📊 분석 결과 요약</h2>
+                        <h2 class="text-2xl font-bold">📊 Analysis Summary</h2>
                     </div>
                     <div class="stats shadow bg-base-100" id="summary">
                         <!-- Stats will be inserted here -->
@@ -119,7 +119,7 @@
                 <div class="card-body">
                     <div class="flex items-center gap-3 mb-6">
                         <span class="badge badge-accent badge-lg">3</span>
-                        <h2 class="text-2xl font-bold">🔤 문자별 상세 분석</h2>
+                        <h2 class="text-2xl font-bold">🔤 Detailed Character Analysis</h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="charGrid">
                         <!-- Character cards will be inserted here -->

@@ -1,7 +1,7 @@
 {
   "name": "char_analyzer",
   "version": "1.0.0",
-  "description": "A modern web application to analyze characters in text, showing Unicode, ASCII codes, and character types with a beautiful shadcn-inspired UI",
+  "description": "A modern web application to analyze characters in text, showing Unicode, ASCII codes, and character types with a beautiful DaisyUI interface",
   "main": "index.html",
   "scripts": {
     "start": "npx serve -s . -l 3000",
