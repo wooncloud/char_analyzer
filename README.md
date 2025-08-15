@@ -1,4 +1,4 @@
-# 문자별 유니코드/ASCII 분석기
+# Character Unicode/ASCII Analyzer
 
 A modern web application to analyze characters in text, showing Unicode, ASCII codes, and character types with a beautiful DaisyUI interface.
 
@@ -17,7 +17,7 @@ A modern web application to analyze characters in text, showing Unicode, ASCII c
 
 1. **Open the application**: Open `index.html` in your web browser
 2. **Enter text**: Type or paste text in the textarea
-3. **Analyze**: Click "문자 분석하기" button or press `Ctrl + Enter`
+3. **Analyze**: Click "Analyze Characters" button or press `Ctrl + Enter`
 4. **View results**: See detailed analysis for each character
 
 ## Development
@@ -62,12 +62,12 @@ The analyzer identifies the following character types:
 
 - **ASCII**: Characters with code points 0-127
 - **Unicode**: Characters with code points above 127
-- **한글 (Korean)**: Korean characters including Hangul
-- **특수문자 (Special)**: Special characters and symbols
-- **공백문자 (Whitespace)**: Spaces, tabs, line breaks
-- **숫자 (Digits)**: Number characters 0-9
-- **영문자 (Alphabets)**: English letters a-z, A-Z
-- **이모지 (Emoji)**: Emoji characters and symbols
+- **Korean**: Korean characters including Hangul
+- **Special**: Special characters and symbols
+- **Whitespace**: Spaces, tabs, line breaks
+- **Digits**: Number characters 0-9
+- **Alphabets**: English letters a-z, A-Z
+- **Emoji**: Emoji characters and symbols
 
 ## Technologies Used
 
