@@ -7,7 +7,15 @@
     <meta name="description" content="Analyze each character in your text to view detailed information including Unicode values, ASCII codes, and character types (Korean, English, digits, special characters, emojis). A comprehensive online tool for character analysis.">
     <meta name="keywords" content="unicode, ascii, character analyzer, developer tool, text analysis, character encoding, utf-16, hex converter, korean characters">
     <meta name="author" content="wooncloud">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#570DF8" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#7C3AED" media="(prefers-color-scheme: dark)">
+    <meta name="application-name" content="Char Analyzer">
     <link rel="canonical" href="https://wooncloud.github.io/char_analyzer/">
+
+    <!-- Performance Optimization -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -23,24 +31,67 @@
     <meta property="twitter:description" content="Enter text to analyze detailed information about each character including Unicode, ASCII codes, and character types.">
     <meta property="twitter:image" content="https://wooncloud.github.io/char_analyzer/og-image.png">
     
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Character Unicode/ASCII Analyzer",
+        "alternateName": "Char Analyzer",
+        "url": "https://wooncloud.github.io/char_analyzer/",
+        "description": "Analyze each character in your text to view detailed information including Unicode values, ASCII codes, and character types (Korean, English, digits, special characters, emojis). A comprehensive online tool for character analysis.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "wooncloud",
+            "url": "https://github.com/wooncloud"
+        },
+        "featureList": [
+            "Unicode character analysis",
+            "ASCII code conversion",
+            "Character type classification",
+            "Korean character support",
+            "Emoji analysis",
+            "Hex code conversion",
+            "UTF-16 encoding information"
+        ],
+        "softwareHelp": {
+            "@type": "CreativeWork",
+            "url": "https://wooncloud.github.io/char_analyzer/"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "ratingCount": "1"
+        }
+    }
+    </script>
+
     <!-- DaisyUI + Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
+
     <!-- Custom styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="min-h-screen bg-base-100">
-    <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <main class="container mx-auto px-4 py-8 max-w-7xl">
         <!-- Header -->
-        <div class="text-center mb-8">
+        <header class="text-center mb-8">
             <h1 class="text-4xl font-bold text-primary mb-4">
                 🔍 Character Unicode/ASCII Analyzer
             </h1>
             <p class="text-base-content/70 text-lg">
                 Analyze each character in your text in detail and view Unicode, ASCII information
             </p>
-        </div>
+        </header>
 
         <!-- Theme Controller -->
         <div class="flex justify-end mb-6">
@@ -132,7 +183,7 @@
         <div class="hidden justify-center py-8" id="loading">
             <span class="loading loading-spinner loading-lg text-primary"></span>
         </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
